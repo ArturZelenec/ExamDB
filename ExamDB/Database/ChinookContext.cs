@@ -36,7 +36,7 @@ namespace ExamDB.Database
                 optionsBuilder.UseSqlite("DataSource=C:\\Users\\azele\\OneDrive\\Stalinis kompiuteris\\Coding\\AdvancedMokymai\\ExamDB\\ExamDB\\chinook.db");
             }
         }
-
+        //C:\Users\azele\OneDrive\Stalinis kompiuteris\Coding\AdvancedMokymai\ExamDB\ExamDB
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Album>(entity =>
@@ -90,7 +90,8 @@ namespace ExamDB.Database
 
                 entity.HasOne(d => d.SupportRep)
                     .WithMany(p => p.Customers)
-                    .HasForeignKey(d => d.SupportRepId);
+                    .HasForeignKey(d => d.SupportRepId)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -127,7 +128,8 @@ namespace ExamDB.Database
 
                 entity.HasOne(d => d.ReportsToNavigation)
                     .WithMany(p => p.InverseReportsToNavigation)
-                    .HasForeignKey(d => d.ReportsTo);
+                    .HasForeignKey(d => d.ReportsTo)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             modelBuilder.Entity<Genre>(entity =>
@@ -218,6 +220,8 @@ namespace ExamDB.Database
             modelBuilder.Entity<Track>(entity =>
             {
                 entity.ToTable("tracks");
+
+                entity.Property(e => e.Status).HasDefaultValue("Activ");
 
                 entity.HasIndex(e => e.AlbumId, "IFK_TrackAlbumId");
 

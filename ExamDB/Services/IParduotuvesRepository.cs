@@ -2,6 +2,6 @@
 {
     public interface IParduotuvesRepository
     {
-        public void Begin();
+        public void EntryEkranas();
     }
 }

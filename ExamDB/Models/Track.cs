@@ -12,6 +12,7 @@ namespace ExamDB.Models
         }
 
         public long TrackId { get; set; }
+        public string Status { get; set; }
         public string Name { get; set; } = null!;
         public long? AlbumId { get; set; }
         public long MediaTypeId { get; set; }

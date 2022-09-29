@@ -8,7 +8,7 @@ namespace ExamDB
         {
             Console.WriteLine("Hello, World!");
             var repo = new ParduotuvesRepository();
-            repo.Begin();
+            repo.EntryEkranas();
         }
     }
     

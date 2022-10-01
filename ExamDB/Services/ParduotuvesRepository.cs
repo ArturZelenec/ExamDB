@@ -182,6 +182,18 @@ namespace ExamDB.Services
             
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
         private void ModifikuotiPirkėjoDuomenis()
         {
             throw new NotImplementedException();
@@ -229,12 +241,64 @@ namespace ExamDB.Services
                 track.Status = "Active";
                 context.SaveChanges();
             }
-            else if (status == "Notactive")
+            else if (status == "Inactive")
             {
                 using var context = new ChinookContext();
                 var track = context.Tracks.Find(id);
-                track.Status = "Notactive";
+                track.Status = "Inactive";
                 context.SaveChanges();
+            }
+        }
+
+        public void TracksNameDidejimas()
+        {
+            using var context = new ChinookContext();
+            var tracks = context.Tracks
+                .OrderBy(x => x.Name)
+                .Include(x => x.Genre)
+                .ToList();
+            foreach (var track in tracks)
+            {
+                Console.WriteLine($"{track.TrackId} {track.Name} {track.Genre.Name} {track.Composer}");
+            }
+        }
+        public void TracksNameMazejancia()
+        {
+            using var context = new ChinookContext();
+            var tracks = context.Tracks
+                .Where(x => x.Status == "Active")
+                .Include(x => x.Genre)
+                .OrderByDescending(x => x.Name)
+                .ToList();
+            foreach (var track in tracks)
+            {
+                Console.WriteLine($"{track.TrackId} {track.Name} {track.Genre.Name} {track.Composer} ");
+            }
+        }
+        public void PaieskaSecundemDaugiau(int daugiau)
+        {
+            using var context = new ChinookContext();
+            var tracks = context.Tracks
+                .Where(x => x.Status == "Active")
+                .Include(x => x.Genre)
+                .Where(x => x.Milliseconds > daugiau)
+                .ToList();
+            foreach (var track in tracks)
+            {
+                Console.WriteLine($"{track.TrackId} {track.Name} {track.Genre.Name} {track.Composer}");
+            }
+        }
+        public void PaieskaSecundemMaziau(int maziau)
+        {
+            using var context = new ChinookContext();
+            var tracks = context.Tracks
+                .Where(x => x.Status == "Active")
+                .Include(x => x.Genre)
+                .Where(x => x.Milliseconds < maziau)
+                .ToList();
+            foreach (var track in tracks)
+            {
+                Console.WriteLine($"{track.TrackId} {track.Name} {track.Genre.Name} {track.Composer} {Encoding.Default.GetString(track.UnitPrice)} Eur");
             }
         }
 
@@ -339,6 +403,27 @@ namespace ExamDB.Services
                 Console.WriteLine($"{track.TrackId} {track.Name} {track.Genre.Name} {track.Composer} {Encoding.Default.GetString(track.UnitPrice)} Eur");
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void DarbuotojuParinktys()
         {

@@ -7,8 +7,16 @@ namespace ExamDB
         static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
-            var repo = new ParduotuvesRepository();
-            repo.EntryEkranas();
+            while (true)
+            {
+                var repo = new ParduotuvesRepository();
+                repo.EntryEkranas();
+            }
+                
+               
+
+            
+
         }
     }
     

@@ -12,13 +12,13 @@ namespace ExamDB.Models
 
         public long InvoiceId { get; set; }
         public long CustomerId { get; set; }
-        public byte[] InvoiceDate { get; set; } = null!;
+        public DateTime? InvoiceDate { get; set; } = null!;
         public string? BillingAddress { get; set; }
         public string? BillingCity { get; set; }
         public string? BillingState { get; set; }
         public string? BillingCountry { get; set; }
         public string? BillingPostalCode { get; set; }
-        public byte[] Total { get; set; } = null!;
+        public double? Total { get; set; } = null!;
 
         public virtual Customer Customer { get; set; } = null!;
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; }

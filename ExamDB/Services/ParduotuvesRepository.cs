@@ -13,8 +13,6 @@ namespace ExamDB.Services
     {
         const string password = "1234";
 
-        //public static List<dynamic> perkamaDainos = new List<dynamic>();
-        //public static Customer PrisijungesUseris = new Customer();
         private readonly ChinookContext _context;
         
         private Customer? _logIncustomer;
@@ -37,9 +35,15 @@ namespace ExamDB.Services
                 
                 TrackId = trackId
                 
+                
             });
             context.Invoices.Add(invoice);
             context.SaveChanges();
+            Console.WriteLine("Nupirkta");
+            Console.WriteLine("Sugristi [q]");
+            var veiksmas = Console.ReadKey().Key;
+            if (veiksmas == ConsoleKey.Q) PirkimoEkranas();
+           
         }
         public void PirkimaiAlbumo(long customerId, long albumId)
         {
@@ -60,12 +64,18 @@ namespace ExamDB.Services
 
         private void Perziuretikrepseli()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine("UNDER CONSTRUCTION COMING SOON");
+            Console.ReadLine();
+            return;
         }
 
         private void PerziuretiPirkimuIstorija()
         {
-            
+            Console.Clear();
+            Console.WriteLine("UNDER CONSTRUCTION COMING SOON");
+            Console.ReadLine();
+            return;
         }
 
        
@@ -92,23 +102,26 @@ namespace ExamDB.Services
                 if (pasirinkimas2 == ConsoleKey.A) TracksNameDidejimas();
                 if (pasirinkimas2 == ConsoleKey.Z) TracksNameMazejancia();
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Pasirinkite veiksmas: [s] => paieska; [q] => sugrizti atgal");
+                Console.WriteLine("Pasirinkite veiksmas: [s] => rusiavimas; [q] => sugrizti atgal");
                 var pasirinkimas3 = Console.ReadKey().Key;
                 Console.ResetColor();
-                if (pasirinkimas3 == ConsoleKey.S) PirkimoEkranasIdetiIKrepseli();
-                if (pasirinkimas3 == ConsoleKey.Q) PirkimoEkranasIdetiIKrepseli();
+                if (pasirinkimas3 == ConsoleKey.S) RikiavimoEkranas();
+                if (pasirinkimas3 == ConsoleKey.Q) PirkimoEkranas();
             }
            
                 //Console.WriteLine("Pasirinkite veiksma [p] => paieska [q] => grizti");
                 //var pasirinkimas3 = Console.ReadKey().Key;
                 if (pasirinkimas == ConsoleKey.S) PirkimoEkranasIdetiIKrepseli();
-                if (pasirinkimas == ConsoleKey.Q) PirkimoEkranasIdetiIKrepseli();
+                if (pasirinkimas == ConsoleKey.Q) PirkimoEkranas();
             
         }
 
         private void StatistikaDarbuotojams()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine("UNDER CONSTRUCTION COMING SOON");
+            Console.ReadLine();
+            return;
         }
 
 
@@ -248,7 +261,7 @@ namespace ExamDB.Services
             {
                 Console.WriteLine("Iveskite Dainos Id");
                 long dainosId = long.Parse(Console.ReadLine());
-                Console.WriteLine("Iveskite Statusa [Activ] arba [Inactiv]");
+                Console.WriteLine("Iveskite Statusa [Activ] arba [Inactive]");
                 string status = Console.ReadLine();
                 PakeistiDainosStatusa(dainosId, status);
             }
@@ -312,19 +325,41 @@ namespace ExamDB.Services
             Console.Clear();
 
             Console.WriteLine("Pasirinkite veiksma:");
-            Console.WriteLine("1. Pagal Name abecėlės tvarka ");
-            Console.WriteLine("2. Pagal Name atvirkštine abecėlės tvarka");
-            Console.WriteLine("3. Pagal Composer");
-            Console.WriteLine("3. Pagal Genre");
+            Console.WriteLine("1. Pagal Composer");
+            Console.WriteLine("2. Pagal Genre");
             Console.WriteLine("3. Pagal Composer And Genre");
             Console.WriteLine("q. Back");
             var veiksmas = Console.ReadKey().Key;
-            if (veiksmas == ConsoleKey.NumPad1) TracksNameDidejimas();
-            if (veiksmas == ConsoleKey.NumPad1) TracksNameMazejancia();
-            if (veiksmas == ConsoleKey.NumPad1) DainosByComposer();
-            if (veiksmas == ConsoleKey.NumPad1) DainosByGenre();
-            if (veiksmas == ConsoleKey.NumPad1) DainosByComposerAndGenre();
-            if (veiksmas == ConsoleKey.Q) DarbuotojuParinktysEkranas();
+            if (veiksmas == ConsoleKey.NumPad1) 
+            {
+                DainosByComposer();
+                Console.WriteLine("Sugristi [q]");
+                var veiksmas4 = Console.ReadKey().Key;
+                if (veiksmas4 == ConsoleKey.Q) PirkimoEkranas();
+                
+            }
+            if (veiksmas == ConsoleKey.NumPad2)
+            {
+                DainosByGenre();
+                Console.WriteLine("Sugristi [q]");
+                var veiksmas4 = Console.ReadKey().Key;
+                if (veiksmas4 == ConsoleKey.Q) PirkimoEkranas();
+                
+            }
+            if (veiksmas == ConsoleKey.NumPad3) 
+            {
+                DainosByComposerAndGenre();
+                Console.WriteLine("Sugristi [q]");
+                var veiksmas4 = Console.ReadKey().Key;
+                if (veiksmas4 == ConsoleKey.Q) PirkimoEkranas();
+            }
+            if (veiksmas == ConsoleKey.Q)
+            {
+                DarbuotojuParinktysEkranas();
+                Console.WriteLine("Sugristi [q]");
+                var veiksmas4 = Console.ReadKey().Key;
+                if (veiksmas4 == ConsoleKey.Q) PirkimoEkranas();
+            }
         }
         #endregion
 
@@ -357,12 +392,9 @@ namespace ExamDB.Services
             }
             else
             {
-
                 Console.Clear();
                 _logIncustomer = atrinktasCustomer;
                 PirkimoEkranas();
-
-
             }
             
 
@@ -389,6 +421,8 @@ namespace ExamDB.Services
                 Email = email
             });
             context.SaveChanges();
+            Console.WriteLine("User sukurtas");
+            Console.ReadLine();
         }
 
         #endregion
@@ -402,6 +436,10 @@ namespace ExamDB.Services
             customer.LastName = pavarde;
             customer.Email = email;
             context.SaveChanges();
+
+            Console.WriteLine("Sugristi [q]");
+            var veiksmas = Console.ReadKey().Key;
+            if (veiksmas == ConsoleKey.Q) DarbuotojuParinktysEkranasKeistiKlientuDuomenis();
         }
         private void PasalintiPirkejaPagalID(long customerId)
         {
@@ -413,6 +451,10 @@ namespace ExamDB.Services
                 chinContext.Customers.Remove(result);
                 chinContext.SaveChanges();
             }
+            Console.WriteLine("Istrinta");
+            Console.WriteLine("Sugristi [q]");
+            var veiksmas = Console.ReadKey().Key;
+            if (veiksmas == ConsoleKey.Q) DarbuotojuParinktysEkranasKeistiKlientuDuomenis();
         }
         private void GautiPirkejuSarasa()
         {
@@ -428,6 +470,10 @@ namespace ExamDB.Services
             {
                 Console.WriteLine($"\n FirstName => {customer.FirstName} {customer.LastName}\n \tCustomerId => {customer.CustomerId}");
             }
+            Console.WriteLine("Sugristi [q]");
+            var veiksmas = Console.ReadKey().Key;
+            if (veiksmas == ConsoleKey.Q) DarbuotojuParinktysEkranasKeistiKlientuDuomenis();
+            
         }
 
 
